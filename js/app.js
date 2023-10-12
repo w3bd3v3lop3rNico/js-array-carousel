@@ -20,16 +20,15 @@ const caroselloDOMElement = document.querySelector('.carousel')
 
 for ( let i = 0; i < imgs.length; i++ ) {
     let immagineCorrenteSrc = imgs[i]
-    // let immagine1 = imgs[0]
-    console.log(i, immagineCorrenteSrc)
-    // console.log(immagine1)
+    // console.log(i, immagineCorrenteSrc)
 
-//        - il ciclo dovrà concatenare un template literal
+    //     - il ciclo dovrà concatenare un template literal
     let imgString =`
-        <img src="${immagineCorrenteSrc}" class = "img-item"></img>
+        <img src="${immagineCorrenteSrc}" class="img-item"></img>
     `
-    console.log(imgString)
+    // console.log(imgString)
     caroselloDOMElement.innerHTML += imgString
+    
     // ESPERIMENTI MIEI
     // caroselloDOMElement.classList.add('d-none')
     // const caroselloImgDOMElement = document.querySelector('image')
@@ -42,10 +41,11 @@ for ( let i = 0; i < imgs.length; i++ ) {
 
 // recupero dal DOM tutte le immagini stampate nel ciclo
 const caroselloImgDOMElements = document.querySelectorAll('.img-item');
-console.log(caroselloImgDOMElements);
+// console.log(caroselloImgDOMElements);
 
 // memorizzo lo stato del carosello (indice slide attiva)
 let currentIndex = 0;
+let indexLength = caroselloImgDOMElements.length -1
 
 // aggiungo la classe active alla slide attiva
 let currentSlide = caroselloImgDOMElements[currentIndex];
@@ -53,25 +53,58 @@ currentSlide.classList.add('active')
 
 // recupero dal DOM le frecce
 
-const arrowTop = document.querySelector('.carousel .arrow-top');
+const arrowTopDOMElement = document.querySelector('.carousel .arrow-top');
 
-const arrowBottom = document.querySelector('.carousel .arrow-bottom');
+const arrowBottomDOMElement = document.querySelector('.carousel .arrow-bottom');
 
-console.log(arrowTop, arrowBottom)
+// console.log(arrowTopDOMElement, arrowBottomDOMElement)
+
 // creo l'event listener per ogni freccia
-arrowBottom.addEventListener('click', function() {
-    console.log("click arrow bottom")
+arrowBottomDOMElement.addEventListener('click', function() {
+    // console.log("click arrow bottom")
 
-    // assegnare alla slide successiva la classe active
-    
-    
+    // rimuovere la classe active dall'immagine corrente
+    caroselloImgDOMElements[currentIndex].classList.remove('active')
+
+    if ( currentIndex < indexLength) {
+        // incrementare current index
+        currentIndex++
+
+        // assegnare alla slide successiva la classe active
+        currentSlide = caroselloImgDOMElements[currentIndex]
+        currentSlide.classList.add('active')
+        // document.querySelector('.img-item').classList.add('active');
+        
+        
+    } else {
+        currentIndex = 0
+        currentSlide = caroselloImgDOMElements[currentIndex].classList.add('active')
+    }
+    // console.log(currentIndex, currentSlide)
 })
 
-arrowTop.addEventListener('click', function(){
-    console.log('click arrow top')
 
-    // assegnare alla classe precedente la classe active
+// console.log(currentSlide)
 
+arrowTopDOMElement.addEventListener('click', function(){
+    // console.log('click arrow top', caroselloImgDOMElements[currentIndex])
+    // rimuvere la classe active all'immagine corrente
+    caroselloImgDOMElements[currentIndex].classList.remove('active')
+
+    if (currentIndex !== indexLength) {
+        // decrementare current index
+        currentIndex--
+
+        // assegnare alla slide precedente la classe active
+
+        currentSlide = caroselloImgDOMElements[currentIndex].classList.add('active')
+
+        // console.log(currentIndex, caroselloImgDOMElements[currentIndex])
+    } else {
+        currentIndex = indexLength
+        currentSlide = caroselloImgDOMElements[currentIndex]
+    }
+    // console.log(currentIndex, currentSlide)
 })
 
 
